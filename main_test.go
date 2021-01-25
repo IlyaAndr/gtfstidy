@@ -37,7 +37,7 @@ func TestGtfsTidy(t *testing.T) {
 	minzers = append(minzers, processors.ServiceDuplicateRemover{})
 	minzers = append(minzers, processors.ServiceMinimizer{})
 	minzers = append(minzers, processors.FrequencyMinimizer{})
-	minzers = append(minzers, processors.IDMinimizer{Base: 36})
+	minzers = append(minzers, processors.IDMinimizer{Base: 36, Initial: 1})
 
 	for _, m := range minzers {
 		m.Run(feed)

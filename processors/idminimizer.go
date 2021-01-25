@@ -16,7 +16,8 @@ import (
 
 // IDMinimizer minimizes IDs by replacing them be continuous integer
 type IDMinimizer struct {
-	Base int
+	Base    int
+	Initial int64
 }
 
 // Run this IDMinimizer on a feed
@@ -70,7 +71,7 @@ func (minimizer IDMinimizer) Run(feed *gtfsparser.Feed) {
 
 // Minimize trip IDs
 func (minimizer IDMinimizer) minimizeTripIds(feed *gtfsparser.Feed) {
-	var idCount int64 = 1
+	var idCount int64 = minimizer.Initial
 
 	newMap := make(map[string]*gtfs.Trip)
 	for _, t := range feed.Trips {
@@ -84,7 +85,7 @@ func (minimizer IDMinimizer) minimizeTripIds(feed *gtfsparser.Feed) {
 
 // Minimize shape IDs
 func (minimizer IDMinimizer) minimizeShapeIds(feed *gtfsparser.Feed) {
-	var idCount int64 = 1
+	var idCount int64 = minimizer.Initial
 
 	newMap := make(map[string]*gtfs.Shape)
 	for _, s := range feed.Shapes {
@@ -98,7 +99,7 @@ func (minimizer IDMinimizer) minimizeShapeIds(feed *gtfsparser.Feed) {
 
 // Minimize route IDs
 func (minimizer IDMinimizer) minimizeRouteIds(feed *gtfsparser.Feed) {
-	var idCount int64 = 1
+	var idCount int64 = minimizer.Initial
 
 	newMap := make(map[string]*gtfs.Route)
 	for _, r := range feed.Routes {
@@ -112,7 +113,7 @@ func (minimizer IDMinimizer) minimizeRouteIds(feed *gtfsparser.Feed) {
 
 // Minimize service IDs
 func (minimizer IDMinimizer) minimizeServiceIds(feed *gtfsparser.Feed) {
-	var idCount int64 = 1
+	var idCount int64 = minimizer.Initial
 
 	newMap := make(map[string]*gtfs.Service)
 	for _, s := range feed.Services {
@@ -126,7 +127,7 @@ func (minimizer IDMinimizer) minimizeServiceIds(feed *gtfsparser.Feed) {
 
 // Minimize stop IDs
 func (minimizer IDMinimizer) minimizeStopIds(feed *gtfsparser.Feed) {
-	var idCount int64 = 1
+	var idCount int64 = minimizer.Initial
 
 	newMap := make(map[string]*gtfs.Stop)
 	for _, s := range feed.Stops {
@@ -140,7 +141,7 @@ func (minimizer IDMinimizer) minimizeStopIds(feed *gtfsparser.Feed) {
 
 // Minimize agency IDs
 func (minimizer IDMinimizer) minimizeAgencyIds(feed *gtfsparser.Feed) {
-	var idCount int64 = 1
+	var idCount int64 = minimizer.Initial
 
 	newMap := make(map[string]*gtfs.Agency)
 	for _, a := range feed.Agencies {
@@ -154,7 +155,7 @@ func (minimizer IDMinimizer) minimizeAgencyIds(feed *gtfsparser.Feed) {
 
 // Minimize fare IDs
 func (minimizer IDMinimizer) minimizeFareIds(feed *gtfsparser.Feed) {
-	var idCount int64 = 1
+	var idCount int64 = minimizer.Initial
 
 	newMap := make(map[string]*gtfs.FareAttribute)
 	for _, a := range feed.FareAttributes {
@@ -168,7 +169,7 @@ func (minimizer IDMinimizer) minimizeFareIds(feed *gtfsparser.Feed) {
 
 // Minimize pathway IDs
 func (minimizer IDMinimizer) minimizePathwayIds(feed *gtfsparser.Feed) {
-	var idCount int64 = 1
+	var idCount int64 = minimizer.Initial
 
 	newMap := make(map[string]*gtfs.Pathway)
 	for _, a := range feed.Pathways {
@@ -182,7 +183,7 @@ func (minimizer IDMinimizer) minimizePathwayIds(feed *gtfsparser.Feed) {
 
 // Minimize level IDs
 func (minimizer IDMinimizer) minimizeLevelIds(feed *gtfsparser.Feed) {
-	var idCount int64 = 1
+	var idCount int64 = minimizer.Initial
 
 	newMap := make(map[string]*gtfs.Level)
 	for _, a := range feed.Levels {

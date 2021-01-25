@@ -55,6 +55,7 @@ func main() {
 	useRedRouteMinimizer := flag.BoolP("remove-red-routes", "R", false, "remove route duplicates")
 	useRedServiceMinimizer := flag.BoolP("remove-red-services", "C", false, "remove duplicate services in calendar.txt and calendar_dates.txt")
 	useIDMinimizerNum := flag.BoolP("minimize-ids-num", "i", false, "minimize IDs using numerical IDs (e.g. 144, 145, 146...)")
+	initialIDMinimizerNum := flag.Int64P("minimize-ids-initial", "", 1, "set initial ID for minimization")
 	useIDMinimizerChar := flag.BoolP("minimize-ids-char", "d", false, "minimize IDs using character IDs (e.g. abc, abd, abe, abf...)")
 	useServiceMinimizer := flag.BoolP("minimize-services", "c", false, "minimize services by searching for the optimal exception/range coverage")
 	useFrequencyMinimizer := flag.BoolP("minimize-stoptimes", "T", false, "search for frequency patterns in explicit trips and combine them, using a CAP approach")
@@ -240,17 +241,15 @@ func main() {
 		}
 
 		if *useIDMinimizerNum {
-			minzers = append(minzers, processors.IDMinimizer{Base: 10})
+			minzers = append(minzers, processors.IDMinimizer{Base: 10, Initial: *initialIDMinimizerNum})
 		} else if *useIDMinimizerChar {
-			minzers = append(minzers, processors.IDMinimizer{Base: 36})
+			minzers = append(minzers, processors.IDMinimizer{Base: 36, Initial: *initialIDMinimizerNum})
 		}
 
 		// do processing
 		for _, m := range minzers {
 			m.Run(feed)
 		}
-
-		fmt.Fprintf(os.Stdout, "Outputting GTFS feed to '%s'...", *outputPath)
 
 		if _, err := os.Stat(*outputPath); os.IsNotExist(err) {
 			if path.Ext(*outputPath) == ".zip" {
